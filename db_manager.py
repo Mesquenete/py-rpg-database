@@ -1,5 +1,8 @@
 import psycopg2
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class HeroDatabase:
     """Simple PostgreSQL handler for hero records."""
@@ -8,11 +11,11 @@ class HeroDatabase:
         """Initialize database connection and cursor."""
         try:
             self.connection = psycopg2.connect(
-                host="localhost",
-                database="rpg_db",
-                user="postgres",
-                password="YOUR_PASSWORD_HERE",
-                port="5432",
+                host=os.getenv("DB_HOST"),
+                database=os.getenv("DB_NAME"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASS"),
+                port=os.getenv("DB_PORT")
             )
             self.cursor = self.connection.cursor()
             print("🔌 Database connected successfully!")
